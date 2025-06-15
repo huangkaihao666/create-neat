@@ -195,19 +195,8 @@ module.exports = {
         ],
         splitChunks: {
           chunks: 'all',
-          cacheGroups: {
-            vendor: {
-              name: 'vendors',
-              enforce: true,
-              test: /[\\/]node_modules[\\/]/,
-              filename: 'static/js/[id]_vendors.js',
-              priority: 10,
-            },
-          },
         },
-        runtimeChunk: {
-          name: 'runtime',
-        },
+        runtimeChunk: true,
       }
     : undefined,
 };
