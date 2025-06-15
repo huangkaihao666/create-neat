@@ -44,13 +44,13 @@ module.exports = {
   mode: isDevelopment ? 'development' : 'production',
   output: {
     path: isDevelopment ? undefined : path.resolve(__dirname, './dist'),
-    assetModuleFilename: 'assets/[hash][ext][query]',
+    assetModuleFilename: 'assets/[name].[hash:8][ext]',
     filename: isDevelopment
-      ? 'static/js/[name].bundle.js'
-      : 'static/js/[name].[contenthash:8].bundle.js',
+      ? 'js/[name].js'
+      : 'js/[name].[contenthash:6].js',
     chunkFilename: isDevelopment
-      ? 'static/js/[name].chunk.js'
-      : 'static/js/[name].[contenthash:8].chunk.js',
+      ? 'js/chunks/[name].js'
+      : 'js/chunks/[name].[contenthash:6].js',
     clean: true,
     pathinfo: false,
   },
@@ -71,7 +71,7 @@ module.exports = {
         test: /\.(jpe?g|png|gif|webp|svg|mp4)$/,
         type: 'asset',
         generator: {
-          filename: './images/[hash:8][ext][query]',
+          filename: 'img/[name].[hash:8][ext]',
         },
         parser: {
           dataUrlCondition: {
@@ -93,7 +93,7 @@ module.exports = {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
         type: 'asset/resource',
         generator: {
-          filename: './assets/fonts/[hash][ext][query]',
+          filename: 'fonts/[name].[hash:8][ext]',
         },
       },
       <% if (framework === 'vue') { %>
@@ -138,8 +138,8 @@ module.exports = {
     
     // 生产环境插件
     isProduction && new MiniCssExtractPlugin({
-      filename: 'static/css/[name].[contenthash].css',
-      chunkFilename: 'static/css/[name].[contenthash].css',
+      filename: 'css/[name].[contenthash:6].css',
+      chunkFilename: 'css/[name].[contenthash:6].css',
       ignoreOrder: true,
     }),
     
