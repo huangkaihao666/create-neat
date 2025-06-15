@@ -23,25 +23,6 @@ const ElementPlus = require('unplugin-element-plus/webpack');
 const isDevelopment = process.env.NODE_ENV === 'development';
 const isProduction = process.env.NODE_ENV === 'production';
 
-const developmentPlugins = isDevelopment ? [
-  <% if (framework === 'react') { %>
-  new ReactRefreshWebpackPlugin(),
-  <% if (language === "typescript") { %>
-  new ForkTsCheckerWebpackPlugin({ async: false }),
-  <% } %>
-  <% } %>
-  <% if (typeof(VueEjs)!= "undefined" && VueEjs.useElementPlus == true ) { %>
-    ElementPlus(),
-  <% } %>
-] : [];
-
-const productionPlugins = isProduction ? [
-  new MiniCssExtractPlugin({
-    filename: 'static/css/[name].[contenthash].css',
-    chunkFilename: 'static/css/[name].[contenthash].css',
-    ignoreOrder: true,
-  }),
-] : [];
 <%
 const paths = {
   react: {
@@ -141,7 +122,7 @@ module.exports = {
     },
   },
   plugins: [
-    ...productionPlugins,
+    // 通用插件
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: 'index.html',
@@ -154,10 +135,30 @@ module.exports = {
       BASE_URL: '"./"',
       'process.env': JSON.stringify(process.env),
     }),
-    ...developmentPlugins,
-    <% if (framework === 'vue') { %>
-    new VueLoaderPlugin()
+    
+    // 生产环境插件
+    isProduction && new MiniCssExtractPlugin({
+      filename: 'static/css/[name].[contenthash].css',
+      chunkFilename: 'static/css/[name].[contenthash].css',
+      ignoreOrder: true,
+    }),
+    
+    <% if (framework === 'react') { %>
+    // React开发环境插件
+    isDevelopment && new ReactRefreshWebpackPlugin(),
+    <% if (language === "typescript") { %>
+    isDevelopment && new ForkTsCheckerWebpackPlugin({ async: false }),
     <% } %>
+    <% } %>
+    
+    <% if (typeof(VueEjs)!= "undefined" && VueEjs.useElementPlus == true) { %>
+    // Element Plus插件
+    isDevelopment && ElementPlus(),
+    <% } %>
+    
+    <% if (framework === 'vue') { %>
+    // Vue插件
+    new VueLoaderPlugin()<% } %>
   ].filter(Boolean),
   performance: isProduction
     ? {
