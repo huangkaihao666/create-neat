@@ -23,24 +23,9 @@ const ElementPlus = require('unplugin-element-plus/webpack');
 const isDevelopment = process.env.NODE_ENV === 'development';
 const isProduction = process.env.NODE_ENV === 'production';
 
-<%
-const paths = {
-  react: {
-    typescript: "'./src/index.tsx'",
-    javascript: "'./src/index.jsx'",
-  },
-  vue: {
-    typescript: "'./src/main.ts'",
-    javascript: "'./src/main.js'",
-  }
-};
-const defaultPath = "'./src/main.js'";
-const selectedPath = paths[framework]?.[language] || defaultPath;
-%>
-
 module.exports = {
   stats: 'errors-warnings',
-  entry: <%- selectedPath %>,
+  entry: <% if (framework === 'react') { %><% if (language === "typescript") { %>'./src/index.tsx'<% } else { %>'./src/index.jsx'<% } %><% } else if (framework === 'vue') { %><% if (language === "typescript") { %>'./src/main.ts'<% } else { %>'./src/main.js'<% } %><% } else { %>'./src/main.js'<% } %>,
   mode: isDevelopment ? 'development' : 'production',
   output: {
     path: isDevelopment ? undefined : path.resolve(__dirname, './dist'),
