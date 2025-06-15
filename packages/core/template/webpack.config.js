@@ -45,14 +45,8 @@ module.exports = {
   output: {
     path: isDevelopment ? undefined : path.resolve(__dirname, './dist'),
     assetModuleFilename: 'assets/[name].[hash:8][ext]',
-    filename: isDevelopment
-      ? 'js/[name].js'
-      : 'js/[name].[contenthash:6].js',
-    chunkFilename: isDevelopment
-      ? 'js/chunks/[name].js'
-      : 'js/chunks/[name].[contenthash:6].js',
+    filename: `js/[name]${isDevelopment ? '' : '.[contenthash:8]'}.js`,
     clean: true,
-    pathinfo: false,
   },
   module: {
     rules: [
