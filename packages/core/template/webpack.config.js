@@ -129,13 +129,6 @@ module.exports = {
     // Vue插件
     new VueLoaderPlugin()<% } %>
   ].filter(Boolean),
-  performance: isProduction
-    ? {
-        hints: false,
-        maxEntrypointSize: 512000,
-        maxAssetSize: 512000,
-      }
-    : undefined,
   optimization: isProduction
     ? {
         minimize: true,
