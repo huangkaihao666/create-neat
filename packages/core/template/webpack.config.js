@@ -97,7 +97,6 @@ module.exports = {
     },
   },
   plugins: [
-    // 通用插件
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: 'index.html',
@@ -106,27 +105,19 @@ module.exports = {
     new DefinePlugin({
       'process.env': JSON.stringify(process.env),
     }),
-    
-    // 生产环境插件
     isProduction && new MiniCssExtractPlugin({
       filename: 'css/[name].[contenthash:6].css',
     }),
-    
     <% if (framework === 'react') { %>
-    // React开发环境插件
     isDevelopment && new ReactRefreshWebpackPlugin(),
     <% if (language === "typescript") { %>
     isDevelopment && new ForkTsCheckerWebpackPlugin(),
     <% } %>
     <% } %>
-    
     <% if (typeof(VueEjs)!= "undefined" && VueEjs.useElementPlus == true) { %>
-    // Element Plus插件
     ElementPlus(),
     <% } %>
-    
     <% if (framework === 'vue') { %>
-    // Vue插件
     new VueLoaderPlugin()<% } %>
   ].filter(Boolean),
   optimization: isProduction
