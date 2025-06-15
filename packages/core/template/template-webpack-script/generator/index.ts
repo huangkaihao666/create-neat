@@ -11,7 +11,6 @@ const devDependencies = {
   dotenv: "^16.4.5",
   "dotenv-expand": "^11.0.6",
   "fork-ts-checker-webpack-plugin": "^9.0.2",
-  "html-minimizer-webpack-plugin": "^5.0.0",
   "html-webpack-plugin": "^5.6.0",
   "mini-css-extract-plugin": "^2.9.0",
   portfinder: "^1.0.32",
