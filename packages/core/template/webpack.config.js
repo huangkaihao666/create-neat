@@ -93,7 +93,6 @@ module.exports = {
   resolve: {
     extensions: [<% if (framework === 'vue') { %>'.vue', <% } %>'.js', '.jsx', '.ts', '.tsx'],
     alias: {
-      '@pages': './src/pages',
       '@': './src',
     },
   },
