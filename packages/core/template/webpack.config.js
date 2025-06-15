@@ -36,7 +36,7 @@ module.exports = {
   module: {
     rules: [
     {
-        test: /\.(css<% if (plugin ==='scss' ) { %>|s[ac]ss<% } %>)$/i,
+        test: /\.css$/i,
         use: [
           isDevelopment ?
           <% if (framework === 'vue') { %>
@@ -46,10 +46,19 @@ module.exports = {
           <% } %>
           : MiniCssExtractPlugin.loader,
           'css-loader',
-          'postcss-loader'<% if (plugin ==='scss' ) { %>,
-          'sass-loader'<% } %>
+          'postcss-loader'
         ].filter(Boolean),
       },
+      <% if (plugin ==='scss' ) { %>
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          'style-loader',
+          'css-loader',
+          'sass-loader'
+        ],
+      },
+      <% } %>
       {
         test: /\.(jpe?g|png|gif|webp|svg|mp4|woff|woff2|eot|ttf|otf)$/i,
         type: 'asset',
