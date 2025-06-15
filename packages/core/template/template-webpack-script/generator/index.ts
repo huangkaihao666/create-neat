@@ -20,7 +20,7 @@ const devDependencies = {
   "purgecss-webpack-plugin": "^6.0.0",
   "terser-webpack-plugin": "^5.3.10",
   webpack: "^5.91.0",
-  "webpack-bundle-analyzer": "^4.10.2",
+  
   "webpack-dev-server": "^5.0.4",
   "webpack-manifest-plugin": "^5.0.0",
   "cross-env": "^7.0.3",
@@ -30,7 +30,6 @@ const devDependencies = {
 const scripts = {
   dev: "cross-env NODE_ENV=development npx webpack serve --config ./webpack.config.js",
   build: "cross-env NODE_ENV=production npx webpack build --config ./webpack.config.js",
-  analyzer: "cross-env NODE_ENV=production CLI=analyzer npx webpack build --config ./webpack.config.js",
 };
 
 export default (templateAPI: TemplateAPI, template: string) => {

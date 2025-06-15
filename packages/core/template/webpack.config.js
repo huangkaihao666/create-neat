@@ -6,8 +6,6 @@ const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const HtmlMinimizerPlugin = require('html-minimizer-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 <% if (framework === 'react') { %>
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
@@ -25,7 +23,6 @@ const ElementPlus = require('unplugin-element-plus/webpack');
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 const isProduction = process.env.NODE_ENV === 'production';
-const isAnalyzer = process.env.CLI === "analyzer";
 
 const developmentPlugins = isDevelopment ? [
   <% if (framework === 'react') { %>
@@ -152,7 +149,7 @@ module.exports = {
     },
   },
   plugins: [
-  ...productionPlugins,
+    ...productionPlugins,
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: 'index.html',
@@ -180,9 +177,8 @@ module.exports = {
     }),
     ...developmentPlugins,
     <% if (framework === 'vue') { %>
-      new VueLoaderPlugin(),
+    new VueLoaderPlugin()
     <% } %>
-    isAnalyzer ? new BundleAnalyzerPlugin() : false
   ].filter(Boolean),
   performance: isProduction
     ? {
