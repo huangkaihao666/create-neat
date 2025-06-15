@@ -175,17 +175,9 @@ module.exports = {
         usedExports: true,
         minimizer: [
           new TerserPlugin({
-            test: /\.(tsx?|jsx?)$/,
-            include: [path.resolve(__dirname, './src')],
-            exclude: /node_modules/,
             parallel: true,
             terserOptions: {
-              toplevel: true,
-              ie8: true,
-              safari10: true,
               compress: {
-                arguments: false,
-                dead_code: true,
                 pure_funcs: ['console.log'],
               },
             },
