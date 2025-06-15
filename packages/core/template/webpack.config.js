@@ -51,7 +51,7 @@ module.exports = {
   module: {
     rules: [
     {
-        test: /\.css$/i,
+        test: /\.(css<% if (plugin ==='scss' ) { %>|s[ac]ss<% } %>)$/i,
         use: [
           isDevelopment ?
           <% if (framework === 'vue') { %>
@@ -59,7 +59,11 @@ module.exports = {
           <% } else { %>
           'style-loader'
           <% } %>
-          : MiniCssExtractPlugin.loader,'css-loader','postcss-loader'].filter(Boolean),
+          : MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader'<% if (plugin ==='scss' ) { %>,
+          'sass-loader'<% } %>
+        ].filter(Boolean),
       },
       {
         test: /\.(jpe?g|png|gif|webp|svg|mp4|woff|woff2|eot|ttf|otf)$/i,
@@ -68,16 +72,6 @@ module.exports = {
           filename: '[path][name].[hash:8][ext]'
         }
       },
-      <% if (plugin ==='scss' ) { %>
-      {
-        test: /\.s[ac]ss$/i,
-        use: [
-            'style-loader', 
-            'css-loader',   
-            'sass-loader',  
-        ],
-      },
-      <% } %>
       <% if (framework === 'vue') { %>
       {
         test: /\.vue$/,
