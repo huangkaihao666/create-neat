@@ -149,20 +149,7 @@ module.exports = {
       title: 'moment',
       inject: true,
       hash: true,
-      minify: isDevelopment
-        ? false
-        : {
-            removeComments: true,
-            collapseWhitespace: true,
-            minifyCSS: true,
-            minifyJS: true,
-            caseSensitive: true,
-            removeRedundantAttributes: true,
-            removeEmptyAttributes: true,
-            removeStyleLinkTypeAttributes: true,
-            removeScriptTypeAttributes: true,
-            useShortDoctype: true,
-          },
+      minify: isDevelopment ? false : 'auto',
     }),
     new DefinePlugin({
       BASE_URL: '"./"',
