@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const HtmlMinimizerPlugin = require('html-minimizer-webpack-plugin');
-const CompressionWebpackPlugin = require('compression-webpack-plugin');
+
 
 <% if (framework === 'react') { %>
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
@@ -41,13 +41,6 @@ const productionPlugins = isProduction ? [
     filename: 'static/css/[name].[contenthash].css',
     chunkFilename: 'static/css/[name].[contenthash].css',
     ignoreOrder: true,
-  }),
-  new CompressionWebpackPlugin({
-    filename: '[path][base].gz',
-    algorithm: 'gzip',
-    test: /\.js$|\.json$|\.css/,
-    threshold: 10240,
-    minRatio: 0.8,
   }),
 ] : [];
 <%

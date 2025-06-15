@@ -4,7 +4,6 @@ const devDependencies = {
   autoprefixer: "^10.4.19",
   chalk: "^4.0.0",
   "circular-dependency-plugin": "^5.2.2",
-  "compression-webpack-plugin": "^11.1.0",
   "copy-webpack-plugin": "^12.0.2",
   "cross-spawn": "^7.0.3",
   "css-loader": "^7.1.2",
