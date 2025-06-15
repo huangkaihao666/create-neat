@@ -78,12 +78,7 @@ module.exports = {
             }
             return 'img/[name].[hash:8][ext]';
           }
-        },
-        parser: {
-          dataUrlCondition: {
-            maxSize: 10 * 1024,
-          },
-        },
+        }
       },
       <% if (plugin ==='scss' ) { %>
       {
@@ -126,33 +121,27 @@ module.exports = {
       template: './public/index.html',
       filename: 'index.html',
       title: 'moment',
-      inject: true,
-      hash: true,
-      minify: isDevelopment ? false : 'auto',
     }),
     new DefinePlugin({
-      BASE_URL: '"./"',
       'process.env': JSON.stringify(process.env),
     }),
     
     // 生产环境插件
     isProduction && new MiniCssExtractPlugin({
       filename: 'css/[name].[contenthash:6].css',
-      chunkFilename: 'css/[name].[contenthash:6].css',
-      ignoreOrder: true,
     }),
     
     <% if (framework === 'react') { %>
     // React开发环境插件
     isDevelopment && new ReactRefreshWebpackPlugin(),
     <% if (language === "typescript") { %>
-    isDevelopment && new ForkTsCheckerWebpackPlugin({ async: false }),
+    isDevelopment && new ForkTsCheckerWebpackPlugin(),
     <% } %>
     <% } %>
     
     <% if (typeof(VueEjs)!= "undefined" && VueEjs.useElementPlus == true) { %>
     // Element Plus插件
-    isDevelopment && ElementPlus(),
+    ElementPlus(),
     <% } %>
     
     <% if (framework === 'vue') { %>
@@ -168,25 +157,14 @@ module.exports = {
     : undefined,
   optimization: isProduction
     ? {
-        chunkIds: 'named',
-        moduleIds: 'deterministic',
         minimize: true,
-        usedExports: true,
         minimizer: [
-          new TerserPlugin({
-            parallel: true,
-            terserOptions: {
-              compress: {
-                pure_funcs: ['console.log'],
-              },
-            },
-          }),
+          new TerserPlugin(),
           new CssMinimizerPlugin(),
         ],
         splitChunks: {
           chunks: 'all',
         },
-        runtimeChunk: true,
       }
     : undefined,
 };
