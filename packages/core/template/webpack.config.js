@@ -68,10 +68,16 @@ module.exports = {
           : MiniCssExtractPlugin.loader,'css-loader','postcss-loader'].filter(Boolean),
       },
       {
-        test: /\.(jpe?g|png|gif|webp|svg|mp4)$/,
+        test: /\.(jpe?g|png|gif|webp|svg|mp4|woff|woff2|eot|ttf|otf)$/i,
         type: 'asset',
         generator: {
-          filename: 'img/[name].[hash:8][ext]',
+          filename: (pathData) => {
+            const ext = pathData.filename.split('.').pop();
+            if (/woff|woff2|eot|ttf|otf/i.test(ext)) {
+              return 'fonts/[name].[hash:8][ext]';
+            }
+            return 'img/[name].[hash:8][ext]';
+          }
         },
         parser: {
           dataUrlCondition: {
@@ -89,13 +95,6 @@ module.exports = {
         ],
       },
       <% } %>
-      {
-        test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        type: 'asset/resource',
-        generator: {
-          filename: 'fonts/[name].[hash:8][ext]',
-        },
-      },
       <% if (framework === 'vue') { %>
       {
         test: /\.vue$/,
