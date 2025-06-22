@@ -18,19 +18,28 @@ const devDependencies = {
   "purgecss-webpack-plugin": "^6.0.0",
   "terser-webpack-plugin": "^5.3.10",
   webpack: "^5.91.0",
-  
   "webpack-dev-server": "^5.0.4",
   "webpack-manifest-plugin": "^5.0.0",
   "cross-env": "^7.0.3",
   "webpack-cli": "^5.1.4"
 };
 
-const scripts = {
-  dev: "cross-env NODE_ENV=development npx webpack serve --config ./webpack.config.js",
-  build: "cross-env NODE_ENV=production npx webpack build --config ./webpack.config.js",
-};
+// 检查是否为TypeScript项目
+const isTypeScript = process.env.isTs === "true";
+
+// 根据是否为TypeScript项目返回不同的scripts
+function getScripts() {
+  const configFile = isTypeScript ? "./webpack.config.ts" : "./webpack.config.js";
+  
+  return {
+    dev: `cross-env NODE_ENV=development npx webpack serve --config ${configFile}`,
+    build: `cross-env NODE_ENV=production npx webpack build --config ${configFile}`,
+  };
+}
 
 export default (templateAPI: TemplateAPI, template: string) => {
+  const scripts = getScripts();
+  
   if (template === "vue") {
     templateAPI.extendPackage({
       scripts,

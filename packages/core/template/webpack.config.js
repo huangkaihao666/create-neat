@@ -29,7 +29,7 @@ module.exports = {
   mode: isDevelopment ? 'development' : 'production',
   output: {
     path: isDevelopment ? undefined : path.resolve(__dirname, './dist'),
-    assetModuleFilename: 'assets/[name].[hash:8][ext]',
+    assetModuleFilename: 'assets/[name].[contenthash:8][ext]',
     filename: `js/[name]${isDevelopment ? '' : '.[contenthash:8]'}.js`,
     clean: true,
   },
@@ -63,7 +63,7 @@ module.exports = {
         test: /\.(jpe?g|png|gif|webp|svg|mp4|woff|woff2|eot|ttf|otf)$/i,
         type: 'asset',
         generator: {
-          filename: '[path][name].[hash:8][ext]'
+          filename: '[path][name].[contenthash:8][ext]'
         }
       },
       <% if (framework === 'vue') { %>
@@ -97,7 +97,7 @@ module.exports = {
       'process.env': JSON.stringify(process.env),
     }),
     isProduction && new MiniCssExtractPlugin({
-      filename: 'css/[name].[contenthash:6].css',
+      filename: 'css/[name].[contenthash:8].css',
     }),
     <% if (framework === 'react') { %>
     isDevelopment && new ReactRefreshWebpackPlugin(),
