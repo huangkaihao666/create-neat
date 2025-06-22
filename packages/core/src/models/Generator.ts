@@ -338,18 +338,12 @@ class Generator {
     // 与构建工具有关的配置全部添加完毕，生成构建工具配置文件
     const buildConfigFinalContent = generator.default(this.buildToolConfigAst).code;
 
-    // 根据是否是TypeScript项目决定配置文件名和内容
+    // 根据是否是TypeScript项目决定配置文件扩展名
     const isTypeScript = process.env.isTs === "true";
+    const fileExtension = isTypeScript ? "ts" : "js";
+    const buildToolConfigName = `${this.buildTool}.config.${fileExtension}`;
 
-    if (isTypeScript) {
-      // 对于TypeScript项目，生成.ts配置文件
-      const buildToolConfigName = `${this.buildTool}.config.ts`;
-      this.files.addToTreeByFile(buildToolConfigName, buildConfigFinalContent);
-    } else {
-      // 对于JavaScript项目，生成.js配置文件
-      const buildToolConfigName = `${this.buildTool}.config.js`;
-      this.files.addToTreeByFile(buildToolConfigName, buildConfigFinalContent);
-    }
+    this.files.addToTreeByFile(buildToolConfigName, buildConfigFinalContent);
 
     // 从package.json中生成额外的的文件(如果extraConfigFiles为true时需要)
     await this.extractConfigFiles(extraConfigFiles);
